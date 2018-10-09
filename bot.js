@@ -57,7 +57,7 @@ puppeteer
             links.push($(this).attr("href"));
         });
         ref.set({
-            link: links[5],
+            link: links[0],
         });
     })
     .catch(function (err) {
