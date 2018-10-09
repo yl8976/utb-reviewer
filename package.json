@@ -17,8 +17,12 @@
   },
   "homepage": "https://github.com/younglee327/utb-reviewer#readme",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "firebase-admin": "^6.0.0",
     "node-twitterbot": "^0.2.2",
     "npm": "^6.4.1",
+    "puppeteer": "^1.9.0",
+    "request-promise": "^4.2.2",
     "twit": "^2.2.11"
   }
 }
