@@ -1,0 +1,23 @@
+{
+  "name": "utb-reviewer",
+  "version": "1.0.0",
+  "description": "Twitter bot that reviews Under the Button articles.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/younglee327/utb-reviewer.git"
+  },
+  "author": "Young Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/younglee327/utb-reviewer/issues"
+  },
+  "homepage": "https://github.com/younglee327/utb-reviewer#readme",
+  "dependencies": {
+    "npm": "^6.4.1",
+    "twit": "^2.2.11"
+  }
+}
