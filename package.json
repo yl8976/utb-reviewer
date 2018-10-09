@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/younglee327/utb-reviewer#readme",
   "dependencies": {
+    "node-twitterbot": "^0.2.2",
     "npm": "^6.4.1",
     "twit": "^2.2.11"
   }
