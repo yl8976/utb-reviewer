@@ -1,6 +1,6 @@
 # UTB Reviewer Bot
 
-Twitter bot that reviews Under the Button articles. The bot's handle is [@UTBReviewer](https://twitter.com/UTBReviewer).
+A simple Twitter bot that "reviews" Under the Button articles. The bot's handle is [@UTBReviewer](https://twitter.com/UTBReviewer).
 
 ## How It Works
 
