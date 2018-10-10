@@ -98,12 +98,6 @@ ref.on("child_changed", function (snapshot) {
 
 // Export code to other JS files to remove redundancy
 module.exports = {
-    foo: function () {
-        // whatever
-    },
-    bar: function () {
-        // whatever
-    },
     Bot: Bot,
     phraseArray: phraseArray,
     chooseRandom: chooseRandom
