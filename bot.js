@@ -23,7 +23,6 @@ function chooseRandom(myArray) {
     return myArray[Math.floor(Math.random() * myArray.length)];
 }
 var phrase = chooseRandom(phraseArray);
-console.log(process.env.PRIVATE_KEY);
 admin.initializeApp({
     credential: admin.credential.cert({
         projectId: process.env.PROJECT_ID,
