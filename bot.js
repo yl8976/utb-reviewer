@@ -41,7 +41,9 @@ const $ = require('cheerio');
 const url = 'https://www.underthebutton.com/section/all';
 var links = []
 puppeteer
-    .launch()
+    .launch({
+        args: ['--no-sandbox']
+    })
     .then(function (browser) {
         return browser.newPage();
     })
@@ -60,7 +62,6 @@ puppeteer
         });
     })
     .catch(function (err) {
-        //handle error
         console.log("Error!");
         console.log(err);
     });
