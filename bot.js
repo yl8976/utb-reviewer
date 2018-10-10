@@ -34,7 +34,11 @@ var phraseArray = ["This post is SO good, 10/10 ",
     "LOL same 10/10 ",
     "yes 10/10 ",
     "jeeeeeeeez you really outdid yourself with this one. 10/10 ",
-    "wow. 10/10 "
+    "wow. 10/10 ",
+    "this deserves a pulitzer. 10/10",
+    "is this satire? or is this art? 10/10",
+    "reTWEET 10/10",
+    "this is me irl. 10/10"
 ];
 
 // Chooses a random phrase to tweet
@@ -46,12 +50,12 @@ var phrase = chooseRandom(phraseArray);
 // Setup Puppeteer, a headless Chrome browser
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
-const url = 'https://www.underthebutton.com/section/all';
+const url = 'https://www.underthebutton.com/section/all?page=1&per_page=100';
 
 // Most recent post links
 var links = []
 
-// Launch puppeteer and scrape https://underthebutton.com's Most Recent page
+// Launch puppeteer and scrape https://underthebutton.com's Most Recent page with 100 posts
 puppeteer
     .launch({
         args: ['--no-sandbox']
@@ -88,3 +92,10 @@ ref.on("child_changed", function (snapshot) {
     Bot.tweet(phrase + mostRecentPostLink);
     console.log("Tweet successful. The tweet says: " + phrase);
 });
+
+// Randomly tweets an article from the 100 most recent articles with probability 1/2.
+if (Math.round(Math.random())) {
+    phrase = chooseRandom(phraseArray);
+    Bot.tweet(phrase + chooseRandom(links));
+    console.log("Random Tweet successful. The tweet says: " + phrase);
+}
