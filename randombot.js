@@ -70,6 +70,7 @@ puppeteer
 // Randomly tweets an article from the 100 most recent articles with probability 1/2.
 if (Math.round(Math.random())) {
     phrase = chooseRandom(phraseArray);
-    Bot.tweet(phrase + chooseRandom(links));
-    console.log("Random Tweet successful. The tweet says: " + phrase);
+    link = chooseRandom(links);
+    Bot.tweet(phrase + link);
+    console.log("Random Tweet successful. The tweet says: " + phrase + link);
 }
