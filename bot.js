@@ -35,10 +35,13 @@ var phraseArray = ["This post is SO good, 10/10 ",
     "yes 10/10 ",
     "jeeeeeeeez you really outdid yourself with this one. 10/10 ",
     "wow. 10/10 ",
-    "this deserves a pulitzer. 10/10",
-    "is this satire? or is this art? 10/10",
-    "reTWEET 10/10",
-    "this is me irl. 10/10"
+    "this deserves a pulitzer. 10/10 ",
+    "is this satire? or is this art? 10/10 ",
+    "reTWEET 10/10 ",
+    "this is me irl. 10/10 ",
+    "this one's meh. SYKE! 10/10 ",
+    "UTB is really on the come up eh? 10/10 ",
+    "great content. 10/10 "
 ];
 
 // Chooses a random phrase to tweet
@@ -92,3 +95,16 @@ ref.on("child_changed", function (snapshot) {
     Bot.tweet(phrase + mostRecentPostLink);
     console.log("Tweet successful. The tweet says: " + phrase);
 });
+
+// Export code to other JS files to remove redundancy
+module.exports = {
+    foo: function () {
+        // whatever
+    },
+    bar: function () {
+        // whatever
+    },
+    Bot: Bot,
+    phraseArray: phraseArray,
+    chooseRandom: chooseRandom
+};
