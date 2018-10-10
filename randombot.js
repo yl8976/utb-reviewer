@@ -67,10 +67,26 @@ puppeteer
         console.log(err);
     });
 
-// Randomly tweets an article from the 100 most recent articles with probability 1/2.
-if (Math.round(Math.random())) {
-    phrase = chooseRandom(phraseArray);
-    link = chooseRandom(links);
-    Bot.tweet(phrase + link);
-    console.log("Random Tweet successful. The tweet says: " + phrase + link);
+
+
+// Function to make delays (gives time for link scraper)
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+// Randomly tweets an article from the 100 most recent articles with probability 1/2.
+async function randomTweet() {
+    console.log('Waiting for scraper...');
+    // Wait 1 minute for link scraper
+    await sleep(60000);
+
+    // Choose link and tweet at random and tweets them
+    if (Math.round(Math.random())) {
+        phrase = chooseRandom(phraseArray);
+        link = chooseRandom(links);
+        Bot.tweet(phrase + link);
+        console.log("Random Tweet successful. The tweet says: " + phrase + link);
+    }
+}
+
+randomTweet();
