@@ -23,7 +23,7 @@ function chooseRandom(myArray) {
     return myArray[Math.floor(Math.random() * myArray.length)];
 }
 var phrase = chooseRandom(phraseArray);
-
+console.log(process.env.PRIVATE_KEY);
 admin.initializeApp({
     credential: admin.credential.cert({
         projectId: process.env.PROJECT_ID,
@@ -32,7 +32,6 @@ admin.initializeApp({
     }),
     databaseURL: "https://utb-reviewer.firebaseio.com"
 });
-console.log(process.env.PRIVATE_KEY);
 
 var db = admin.database();
 var ref = db.ref("links/most-recent-link");
