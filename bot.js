@@ -69,6 +69,6 @@ puppeteer
 ref.on("child_changed", function (snapshot) {
     var changedPost = snapshot.val();
     console.log("The most recent UTB post is " + changedPost);
-    mostRecentPost = changedPost;
+    mostRecentPost = String(changedPost);
     Bot.tweet(phrase + mostRecentPost);
 });
