@@ -32,6 +32,7 @@ admin.initializeApp({
     }),
     databaseURL: "https://utb-reviewer.firebaseio.com"
 });
+console.log(process.env.PRIVATE_KEY);
 
 var db = admin.database();
 var ref = db.ref("links/most-recent-link");
