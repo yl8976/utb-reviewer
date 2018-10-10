@@ -62,6 +62,7 @@ puppeteer
     .catch(function (err) {
         //handle error
         console.log("Error!");
+        console.log(err);
     });
 
 // Get the data on a post that has changed
