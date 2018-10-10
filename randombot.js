@@ -1,5 +1,4 @@
-// Import Firebase Admin, Twit, and Node-Twitterbot
-var admin = require('firebase-admin');
+// Import Twit and Node-Twitterbot
 var Twit = require('twit');
 var TwitterBot = require('node-twitterbot').TwitterBot;
 
@@ -10,19 +9,6 @@ var Bot = new TwitterBot({
     access_token: process.env.BOT_ACCESS_TOKEN,
     access_token_secret: process.env.BOT_ACCESS_TOKEN_SECRET
 });
-
-// Initialize Firebase database
-admin.initializeApp({
-    credential: admin.credential.cert({
-        projectId: process.env.PROJECT_ID,
-        clientEmail: process.env.CLIENT_EMAIL,
-        privateKey: process.env.PRIVATE_KEY.replace(/\\n/g, '\n')
-    }),
-    databaseURL: "https://utb-reviewer.firebaseio.com"
-});
-var db = admin.database();
-var ref = db.ref("links/most-recent-link");
-var mostRecentPostLink = "";
 
 // Random phrases to choose from
 var phraseArray = ["This post is SO good, 10/10 ",
@@ -50,12 +36,12 @@ var phrase = chooseRandom(phraseArray);
 // Setup Puppeteer, a headless Chrome browser
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
-const url = 'https://www.underthebutton.com/section/all?page=1&per_page=5';
+const url = 'https://www.underthebutton.com/section/all?page=1&per_page=100';
 
 // Most recent post links
 var links = []
 
-// Launch puppeteer and scrape https://underthebutton.com's Most Recent page with 5 posts
+// Launch puppeteer and scrape https://underthebutton.com's Most Recent page with 100 posts
 puppeteer
     .launch({
         args: ['--no-sandbox']
@@ -73,9 +59,6 @@ puppeteer
         $('.most-recent-photo > a', html).each(function () {
             links.push($(this).attr("href"));
         });
-        ref.set({
-            link: links[0],
-        });
         console.log("The most recent link so far: " + links[0])
     })
     .catch(function (err) {
@@ -84,11 +67,9 @@ puppeteer
         console.log(err);
     });
 
-// If most recent link changes when you scrape the site, compose a new tweet with the latest post link
-ref.on("child_changed", function (snapshot) {
-    var changedPost = snapshot.val();
-    console.log("New post detected! The most recent post link is: " + changedPost);
-    mostRecentPostLink = String(changedPost);
-    Bot.tweet(phrase + mostRecentPostLink);
-    console.log("Tweet successful. The tweet says: " + phrase);
-});
+// Randomly tweets an article from the 100 most recent articles with probability 1/2.
+if (Math.round(Math.random())) {
+    phrase = chooseRandom(phraseArray);
+    Bot.tweet(phrase + chooseRandom(links));
+    console.log("Random Tweet successful. The tweet says: " + phrase);
+}
