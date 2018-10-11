@@ -2,6 +2,7 @@
 var admin = require('firebase-admin');
 var Twit = require('twit');
 var TwitterBot = require('node-twitterbot').TwitterBot;
+var Tweets = require('./tweets');
 
 // Setup Twitter API access (secret keys are stored privately on Heroku)
 var Bot = new TwitterBot({
@@ -24,34 +25,11 @@ var db = admin.database();
 var ref = db.ref("links/most-recent-link");
 var mostRecentPostLink = "";
 
-// Random phrases to choose from
-var phraseArray = ["This post is SO good, 10/10 ",
-    "Hahahahahahahahahahaha 10/10 ",
-    "lmao 10/10 ",
-    "absolute 10/10 ",
-    "lmfao 10/10 ",
-    "ok, this is epic 10/10 ",
-    "LOL same 10/10 ",
-    "yes 10/10 ",
-    "jeeeeeeeez you really outdid yourself with this one. 10/10 ",
-    "wow. 10/10 ",
-    "this deserves a pulitzer. 10/10 ",
-    "is this satire? or is this art? 10/10 ",
-    "reTWEET 10/10 ",
-    "this is me irl. 10/10 ",
-    "this one's meh. SYKE! 10/10 ",
-    "UTB is really on the come up eh? 10/10 ",
-    "great content. 10/10 ",
-    "UTB is perhaps one of the best publications I've ever read. 10/10 ",
-    "this gave me a new perspective on life. 10/10 ",
-    "but why? thought-provoking... insightful... 10/10 "
-];
-
 // Chooses a random phrase to tweet
 function chooseRandom(myArray) {
     return myArray[Math.floor(Math.random() * myArray.length)];
 }
-var phrase = chooseRandom(phraseArray);
+var phrase = Tweets.chooseRandom(Tweets.phraseArray);
 
 // Setup Puppeteer, a headless Chrome browser
 const puppeteer = require('puppeteer');
@@ -101,10 +79,3 @@ ref.on("child_changed", function (snapshot) {
     Bot.tweet(phrase + mostRecentPostLink);
     console.log("[bot.js] Tweet successful. The tweet says: " + phrase);
 });
-
-// Export code to other JS files to remove redundancy
-module.exports = {
-    Bot: Bot,
-    phraseArray: phraseArray,
-    chooseRandom: chooseRandom
-};

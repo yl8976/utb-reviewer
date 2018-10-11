@@ -1,7 +1,16 @@
 // Import Twit and Node-Twitterbot
 var Twit = require('twit');
 var TwitterBot = require('node-twitterbot').TwitterBot;
-var botjs = require('./bot');
+var Tweets = require('./tweets');
+
+// Setup Twitter API access (secret keys are stored privately on Heroku)
+var Bot = new TwitterBot({
+    consumer_key: process.env.BOT_CONSUMER_KEY,
+    consumer_secret: process.env.BOT_CONSUMER_SECRET,
+    access_token: process.env.BOT_ACCESS_TOKEN,
+    access_token_secret: process.env.BOT_ACCESS_TOKEN_SECRET
+});
+
 
 // Setup Puppeteer, a headless Chrome browser
 const puppeteer = require('puppeteer');
@@ -25,7 +34,7 @@ async function run() {
     $('.most-recent-photo > a', html).each(function () {
         links.push($(this).attr("href"));
     });
-    console.log("[randombot.js] Scrape successful.");
+    console.log("[randombot.js] Scrape successful. Now wait for the delay to finish...");
     browser.close();
 }
 
@@ -36,15 +45,15 @@ function sleep(ms) {
 
 // Randomly tweets an article from the 100 most recent articles with expected probability of success 30%.
 async function randomTweet() {
-    console.log('[randombot.js] Waiting for scraper...');
+    console.log("[randombot.js] Waiting for scraper...");
     // Wait 1 minute for link scraper
     await sleep(60000);
 
     // Choose link and tweet at random and tweets them
-    if (Math.round(Math.random() + 0.2)) {
-        var phrase = botjs.chooseRandom(botjs.phraseArray);
-        var link = botjs.chooseRandom(links);
-        botjs.Bot.tweet(phrase + link);
+    if (Math.round(Math.random() - 0.2)) {
+        var phrase = Tweets.chooseRandom(Tweets.phraseArray);
+        var link = Tweets.chooseRandom(links);
+        Bot.tweet(phrase + link);
         console.log("[randombot.js] Random tweet successful. The tweet says: " + phrase + link);
     } else {
         console.log("[randombot.js] No random tweet will occur this time.")
@@ -61,6 +70,7 @@ try {
 
 randomTweet();
 
+// Exit and save memory when Heroku cycles dynos
 process.on('SIGTERM', function() {
     process.exit();
 });
