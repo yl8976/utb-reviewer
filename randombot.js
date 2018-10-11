@@ -31,8 +31,8 @@ puppeteer
         });
         console.log("The most recent link so far: " + links[0])
     })
-    .then(function (browser) {
-        return browser.close();
+    .then(function (page) {
+        return page.close();
     })
     .catch(function (err) {
         // Log error to Heroku console

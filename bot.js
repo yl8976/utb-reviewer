@@ -105,7 +105,3 @@ module.exports = {
     phraseArray: phraseArray,
     chooseRandom: chooseRandom
 };
-
-// Stops stupid errors showing up in the log
-var port = process.env.PORT || CONFIG.port;
-app.listen(port);
