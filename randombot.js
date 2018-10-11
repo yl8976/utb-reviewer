@@ -45,7 +45,9 @@ async function randomTweet() {
         var phrase = botjs.chooseRandom(botjs.phraseArray);
         var link = botjs.chooseRandom(links);
         botjs.Bot.tweet(phrase + link);
-        console.log("[randombot.js] Random Tweet successful. The tweet says: " + phrase + link);
+        console.log("[randombot.js] Random tweet successful. The tweet says: " + phrase + link);
+    } else {
+        console.log("[randombot.js] No random tweet will occur this time.")
     }
 }
 
