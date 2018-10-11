@@ -81,7 +81,7 @@ async function run() {
         link: links[0],
     });
 
-    console.log("The most recent link so far: " + links[0]);
+    console.log("[bot.js] The most recent link so far: " + links[0]);
     browser.close();
 }
 
@@ -89,17 +89,17 @@ try {
     run();
 } catch (error) {
     // Log error to Heroku console
-    console.log("You've got an error. Check it out below:");
+    console.log("[bot.js] You've got an error. Check it out below:");
     console.log(error);
 }
 
 // If most recent link changes when you scrape the site, compose a new tweet with the latest post link
 ref.on("child_changed", function (snapshot) {
     var changedPost = snapshot.val();
-    console.log("New post detected! The most recent post link is: " + changedPost);
+    console.log("[bot.js] New post detected! The most recent post link is: " + changedPost);
     mostRecentPostLink = String(changedPost);
     Bot.tweet(phrase + mostRecentPostLink);
-    console.log("Tweet successful. The tweet says: " + phrase);
+    console.log("[bot.js] Tweet successful. The tweet says: " + phrase);
 });
 
 // Export code to other JS files to remove redundancy

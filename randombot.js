@@ -6,7 +6,7 @@ var botjs = require('./bot');
 // Setup Puppeteer, a headless Chrome browser
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
-const url = 'https://www.underthebutton.com/section/all?page=1&per_page=100';
+const url = 'https://www.underthebutton.com/section/all?page=3&per_page=10';
 
 // Most recent post links
 var links = []
@@ -16,7 +16,7 @@ async function run() {
     const browser = await puppeteer.launch({
         args: ['--no-sandbox']
     });
-    
+
     const page = await browser.newPage();
     await page.goto(url);
     let html = await page.content();
@@ -25,7 +25,7 @@ async function run() {
     $('.most-recent-photo > a', html).each(function () {
         links.push($(this).attr("href"));
     });
-    console.log("The most recent link so far: " + links[0]);
+    console.log("[randombot.js] Scrape successful.");
     browser.close();
 }
 
@@ -36,7 +36,7 @@ function sleep(ms) {
 
 // Randomly tweets an article from the 100 most recent articles with expected probability of success 30%.
 async function randomTweet() {
-    console.log('Waiting for scraper...');
+    console.log('[randombot.js] Waiting for scraper...');
     // Wait 1 minute for link scraper
     await sleep(60000);
 
@@ -45,7 +45,7 @@ async function randomTweet() {
         var phrase = botjs.chooseRandom(botjs.phraseArray);
         var link = botjs.chooseRandom(links);
         botjs.Bot.tweet(phrase + link);
-        console.log("Random Tweet successful. The tweet says: " + phrase + link);
+        console.log("[randombot.js] Random Tweet successful. The tweet says: " + phrase + link);
     }
 }
 
@@ -53,8 +53,12 @@ try {
     run();
 } catch (error) {
     // Log error to Heroku console
-    console.log("You've got an error. Check it out below:");
+    console.log("[randombot.js] You've got an error. Check it out below:");
     console.log(error);
 }
 
 randomTweet();
+
+process.on('SIGTERM', function() {
+    process.exit();
+});
