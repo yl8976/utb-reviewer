@@ -32,7 +32,7 @@ puppeteer
         console.log("The most recent link so far: " + links[0])
     })
     .then(function (browser) {
-        browser.close();
+        return browser.close();
     })
     .catch(function (err) {
         // Log error to Heroku console
