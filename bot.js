@@ -41,7 +41,10 @@ var phraseArray = ["This post is SO good, 10/10 ",
     "this is me irl. 10/10 ",
     "this one's meh. SYKE! 10/10 ",
     "UTB is really on the come up eh? 10/10 ",
-    "great content. 10/10 "
+    "great content. 10/10 ",
+    "UTB is perhaps one of the best publications I've ever read. 10/10 ",
+    "this gave me a new perspective on life. 10/10 ",
+    "but why? thought-provoking... insightful... 10/10 "
 ];
 
 // Chooses a random phrase to tweet
@@ -102,3 +105,7 @@ module.exports = {
     phraseArray: phraseArray,
     chooseRandom: chooseRandom
 };
+
+// Stops stupid errors showing up in the log
+var port = process.env.PORT || CONFIG.port;
+app.listen(port);
