@@ -6,7 +6,7 @@ var botjs = require('./bot');
 // Setup Puppeteer, a headless Chrome browser
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
-const url = 'https://www.underthebutton.com/section/all?page=1&per_page=50';
+const url = 'https://www.underthebutton.com/section/all?page=1&per_page=100';
 
 // Most recent post links
 var links = []
