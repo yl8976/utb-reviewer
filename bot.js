@@ -62,33 +62,36 @@ const url = 'https://www.underthebutton.com/section/all?page=1&per_page=5';
 var links = []
 
 // Launch puppeteer and scrape https://underthebutton.com's Most Recent page with 5 posts
-puppeteer
-    .launch({
+async function run() {
+    const browser = await puppeteer.launch({
         args: ['--no-sandbox']
-    })
-    .then(function (browser) {
-        return browser.newPage();
-    })
-    .then(function (page) {
-        return page.goto(url).then(function () {
-            return page.content();
-        });
-    })
-    .then(function (html) {
-        // Grabs only links from Most Recent page
-        $('.most-recent-photo > a', html).each(function () {
-            links.push($(this).attr("href"));
-        });
-        ref.set({
-            link: links[0],
-        });
-        console.log("The most recent link so far: " + links[0])
-    })
-    .catch(function (err) {
-        // Log error to Heroku console
-        console.log("You've got an error. Check it out below:");
-        console.log(err);
     });
+
+    const page = await browser.newPage();
+    await page.goto(url);
+    let html = await page.content();
+
+    // Grabs only links from Most Recent page
+    $('.most-recent-photo > a', html).each(function () {
+        links.push($(this).attr("href"));
+    });
+
+    // Update most recent link to Firebase
+    ref.set({
+        link: links[0],
+    });
+
+    console.log("The most recent link so far: " + links[0]);
+    browser.close();
+}
+
+try {
+    run();
+} catch (error) {
+    // Log error to Heroku console
+    console.log("You've got an error. Check it out below:");
+    console.log(error);
+}
 
 // If most recent link changes when you scrape the site, compose a new tweet with the latest post link
 ref.on("child_changed", function (snapshot) {

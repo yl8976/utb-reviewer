@@ -12,35 +12,22 @@ const url = 'https://www.underthebutton.com/section/all?page=1&per_page=100';
 var links = []
 
 // Launch puppeteer and scrape https://underthebutton.com's Most Recent page with 100 posts
-puppeteer
-    .launch({
+async function run() {
+    const browser = await puppeteer.launch({
         args: ['--no-sandbox']
-    })
-    .then(function (browser) {
-        return browser.newPage();
-    })
-    .then(function (page) {
-        return page.goto(url).then(function () {
-            return page.content();
-        });
-    })
-    .then(function (html) {
-        // Grabs only links from Most Recent page
-        $('.most-recent-photo > a', html).each(function () {
-            links.push($(this).attr("href"));
-        });
-        console.log("The most recent link so far: " + links[0])
-    })
-    .then(function (browser) {
-        return browser.close();
-    })
-    .catch(function (err) {
-        // Log error to Heroku console
-        console.log("You've got an error. Check it out below:");
-        console.log(err);
     });
+    
+    const page = await browser.newPage();
+    await page.goto(url);
+    let html = await page.content();
 
-
+    // Grabs only links from Most Recent page
+    $('.most-recent-photo > a', html).each(function () {
+        links.push($(this).attr("href"));
+    });
+    console.log("The most recent link so far: " + links[0]);
+    browser.close();
+}
 
 // Function to make delays (gives time for link scraper)
 function sleep(ms) {
@@ -60,6 +47,14 @@ async function randomTweet() {
         botjs.Bot.tweet(phrase + link);
         console.log("Random Tweet successful. The tweet says: " + phrase + link);
     }
+}
+
+try {
+    run();
+} catch (error) {
+    // Log error to Heroku console
+    console.log("You've got an error. Check it out below:");
+    console.log(error);
 }
 
 randomTweet();
