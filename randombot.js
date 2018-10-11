@@ -6,7 +6,7 @@ var botjs = require('./bot');
 // Setup Puppeteer, a headless Chrome browser
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
-const url = 'https://www.underthebutton.com/section/all?page=1&per_page=100';
+const url = 'https://www.underthebutton.com/section/all?page=1&per_page=50';
 
 // Most recent post links
 var links = []
@@ -31,6 +31,9 @@ puppeteer
         });
         console.log("The most recent link so far: " + links[0])
     })
+    .then(function (browser) {
+        browser.close();
+    })
     .catch(function (err) {
         // Log error to Heroku console
         console.log("You've got an error. Check it out below:");
@@ -44,14 +47,14 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Randomly tweets an article from the 100 most recent articles with probability 1/2.
+// Randomly tweets an article from the 100 most recent articles with expected probability of success 30%.
 async function randomTweet() {
     console.log('Waiting for scraper...');
     // Wait 1 minute for link scraper
     await sleep(60000);
 
     // Choose link and tweet at random and tweets them
-    if (Math.round(Math.random())) {
+    if (Math.round(Math.random() + 0.2)) {
         var phrase = botjs.chooseRandom(botjs.phraseArray);
         var link = botjs.chooseRandom(links);
         botjs.Bot.tweet(phrase + link);
