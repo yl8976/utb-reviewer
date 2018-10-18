@@ -76,6 +76,6 @@ ref.on("child_changed", function (snapshot) {
     var changedPost = snapshot.val();
     console.log("[bot.js] New post detected! The most recent post link is: " + changedPost);
     mostRecentPostLink = String(changedPost);
-    Bot.tweet(phrase + mostRecentPostLink);
-    console.log("[bot.js] Tweet successful. The tweet says: " + phrase);
+    Bot.tweet(phrase + "10/10. " + mostRecentPostLink);
+    console.log("[bot.js] Tweet successful. The tweet says: " + phrase + "10/10. " + mostRecentPostLink);
 });

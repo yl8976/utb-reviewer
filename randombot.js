@@ -15,7 +15,9 @@ var Bot = new TwitterBot({
 // Setup Puppeteer, a headless Chrome browser
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
-const url = 'https://www.underthebutton.com/section/all?page=3&per_page=10';
+const urlPage = String(Math.floor(Math.random() * 10));
+const url = 'https://www.underthebutton.com/section/all?page=' + urlPage + '&per_page=10';
+console.log("[randombot.js] The URL to scrape is: " + url);
 
 // Most recent post links
 var links = []
@@ -43,18 +45,18 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Randomly tweets an article from the 100 most recent articles with expected probability of success 30%.
+// Randomly tweets an article from the 100 most recent articles with expected probability of success 15%.
 async function randomTweet() {
-    console.log("[randombot.js] Waiting for scraper...");
-    // Wait 1 minute for link scraper
-    await sleep(60000);
-
     // Choose link and tweet at random and tweets them
-    if (Math.round(Math.random() - 0.2)) {
+    if (Math.round(Math.random() - 0.35)) {
+        console.log("[randombot.js] Waiting for scraper...");
+        // Wait 1 minute for link scraper
+        await sleep(60000);
+
         var phrase = Tweets.chooseRandom(Tweets.phraseArray);
         var link = Tweets.chooseRandom(links);
-        Bot.tweet(phrase + link);
-        console.log("[randombot.js] Random tweet successful. The tweet says: " + phrase + link);
+        Bot.tweet(phrase + "10/10. " + link);
+        console.log("[randombot.js] Random tweet successful. The tweet says: " + phrase + "10/10. " + link);
     } else {
         console.log("[randombot.js] No random tweet will occur this time.")
     }
