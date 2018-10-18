@@ -55,8 +55,10 @@ async function randomTweet() {
 
         var phrase = Tweets.chooseRandom(Tweets.phraseArray);
         var link = Tweets.chooseRandom(links);
-        Bot.tweet(phrase + "10/10. " + link);
-        console.log("[randombot.js] Random tweet successful. The tweet says: " + phrase + "10/10. " + link);
+        if(link != undefined) {
+            Bot.tweet(phrase + "10/10. " + link);
+            console.log("[randombot.js] Random tweet successful. The tweet says: " + phrase + "10/10. " + link);
+        }
     } else {
         console.log("[randombot.js] No random tweet will occur this time.")
     }
