@@ -18,7 +18,7 @@
   "homepage": "https://github.com/younglee327/utb-reviewer#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
-    "firebase-admin": "^6.0.0",
+    "firebase-admin": "^11.4.1",
     "node-twitterbot": "^0.2.2",
     "npm": "^6.13.4",
     "puppeteer": "^1.9.0",
